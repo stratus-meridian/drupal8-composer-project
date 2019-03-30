@@ -9,7 +9,6 @@
             "email": "jyothi@stratusmeridian.com"
         }
     ],
-    "minimum-stability": "dev",
     "require": {
         "php": "^7.1",
         "composer/installers": "^1.2",
@@ -72,7 +71,7 @@
             "web/themes/contrib/{$name}": ["type:drupal-theme"],
             "drush/Commands/{$name}": ["type:drupal-drush"]
         },
-    "enable-patching": true,        
+    "enable-patching": true,
         "drupal-scaffold": {
             "initial": {
                 ".editorconfig": "../.editorconfig",
