@@ -1,6 +1,6 @@
 {
-    "name": "stratus-meridian/drupal8-composer-project",
-    "description": "Composer project for Drupal 8 Web Applications.",
+    "name": "stratus-meridian/sm-dev-portal-composer",
+    "description": "Developer Portal Drupal 8 Composer Root.",
     "type": "project",
     "license": "GPL-2.0-or-later",
     "authors": [
@@ -13,6 +13,10 @@
         {
             "type": "composer",
             "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "composer",
+            "url": "https://asset-packagist.org"
         },
         {
             "type": "vcs",
@@ -34,7 +38,7 @@
         "stratus-meridian/sm_dev_portal": "dev-8.x-2.x"
     },
     "require-dev": {
-        "webflo/drupal-core-require-dev": "^8.6.0"
+        "drupal/core-dev": "^8.8"
     },
     "conflict": {
         "drupal/drupal": "*"
@@ -70,24 +74,41 @@
         ]
     },
     "extra": {
-        "composer-exit-on-patch-failure": true,
-        "patchLevel": {
-            "drupal/core": "-p2"
-        },
-        "installer-paths": {
-            "web/core": ["type:drupal-core"],
-            "web/libraries/{$name}": ["type:drupal-library"],
-            "web/modules/contrib/{$name}": ["type:drupal-module"],
-            "web/profiles/contrib/{$name}": ["type:drupal-profile"],
-            "web/themes/contrib/{$name}": ["type:drupal-theme"],
-            "drush/Commands/{$name}": ["type:drupal-drush"]
-        },
-    "enable-patching": true,
-        "drupal-scaffold": {
-            "initial": {
-                ".editorconfig": "../.editorconfig",
-                ".gitattributes": "../.gitattributes"
+            "installer-paths": {
+                "web/core": ["type:drupal-core"],
+                "web/libraries/{$name}": ["type:drupal-library","type:bower-asset","type:npm-asset"],
+                "web/modules/contrib/{$name}": ["type:drupal-module"],
+                "web/profiles/contrib/{$name}": ["type:drupal-profile"],
+                "web/themes/contrib/{$name}": ["type:drupal-theme"],
+                "drush/Commands/contrib/{$name}": ["type:drupal-drush"],
+                "web/libraries/swagger_ui": ["bower-asset/swagger-ui"],
+                "web/private/scripts/quicksilver/{$name}/": ["type:quicksilver-script"]
+            },
+            "installer-types": ["bower-asset", "npm-asset"],
+            "build-env": {
+                "install-cms": [
+                    "drush site-install standard --account-mail={account-mail} --account-name={account-name} --account-pass={account-pass} --site-mail={site-mail} --site-name={site-name} --yes"
+                ],
+                "export-configuration": "drush config-export --yes"
+            },
+            "drupal-core-project-message": {
+                "include-keys": ["homepage", "support"],
+                "post-create-project-cmd-message": [
+                    "<bg=blue;fg=white>                                                         </>",
+                    "<bg=blue;fg=white>  Congratulations, you’ve installed Stratus Meridian Dev Portal  </>",
+                    "<bg=blue;fg=white>  from the stratus-meridian/sm-dev-portal-composer template!          </>",
+                    "<bg=blue;fg=white>                                                         </>",
+                    "",
+                    "<bg=yellow;fg=black>Next steps</>:",
+
+                    "  * Install the site: https://www.drupal.org/docs/8/install",
+                    "  * Read the user guide: https://www.drupal.org/docs/user_guide/en/index.html",
+                    "  * Get support: https://www.support.stratusmeridian.com",
+                    "  * Get involved with the Drupal community:",
+                    "      https://www.drupal.org/getting-involved",
+                    "  * Remove the plugin that prints this message:",
+                    "      composer remove drupal/core-project-message"
+                ]
             }
         }
-    }
 }
